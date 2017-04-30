@@ -4,25 +4,59 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>GameBoy - CSS</title>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,400i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div class="instructions">
+<div class="instructions">
   <p>Instructions</p>
   <p>Play button A</p>
   <p>Pause button B</p>
 </div>
 <div class="gb__container">
+  <div class="volume-group">
+    <div class="volume-1"></div>
+    <div class="volume-2"></div>
+    <div class="volume-3"></div>
+    <div class="volume-4"></div>
+    <div class="volume-5"></div>
+  </div>
   <div class="gb__screen">
+    <div class="gb__screen-text">dot matrix with stereo sound</div>
+    <div class="gb__screen-battery">battery</div>
     <div class="gb__screen-video">
-      <video id="video">
-        <source />
+      <video id="video" preload="none" loop>
+        <!-- poster="https://github.com/cartalan/GameBoy/blob/master/img/Legend-of-Zelda_%20Links_Awakening.png?raw=true" -->
+        <source src="https://github.com/cartalan/GameBoy/blob/master/audio/Legend-of-Zelda_Links_Awakening.mp4?raw=true" type="video/mp4">
+        <source src="https://github.com/cartalan/GameBoy/blob/master/audio/Legend-of-Zelda_Links_Awakening.webm?raw=true" type="video/ogg">
+        Your browser does not support the video tag.
       </video>
     </div>
   </div>
   <div class="gb__text">
-    <p>Nintendo <span class="gb__text-span">game boy</span> TM</p>
+    <p>Nintendo <span class="gameboy">game boy </span><span class="tm">TM</span></p>
   </div>
-  <div class="gb__controller"></div>
+  <div class="gb__controller">
+    <div class="gb__btn-up">
+      <div class="btn__pad">
+        <div class="pad__rows pad__rows-up"></div>
+        <div class="pad__rows pad__rows-right"></div>
+        <div class="pad__rows pad__rows-down"></div>
+        <div class="pad__rows pad__rows-left"></div>
+        <div class="pad__rows pad__rows-center"></div>
+      </div>
+      <div class="btn__buttons">
+        <div class="btn btn-b" id="btnB"></div>
+        <div class="btn btn-a" id="btnA"></div>
+      </div>
+    </div>
+    <div class="gb__btn-down">
+      <div class="btn__option btn__select"></div>
+      <div class="btn__option btn__start"></div>
+    </div>
+  </div>
 </div>
+<script src="js/main.js"></script>
 </body>
 </html>

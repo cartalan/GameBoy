@@ -1,0 +1,473 @@
+$bg-color: #111;
+$gb-color: #d8d8d8;
+$screen: #7f8891;
+$pad: #222;
+$btn-color: #840039;
+$btn-option: #919294;
+@mixin box($width, $height, $bgColor) {
+  width: $width;
+  height: $height;
+  background-color: $bgColor;
+}
+@function longShadow($number, $color) {
+  $box-shadow: 1px 1px #{$color};
+  @for $i from 1 through $number {
+    $box-shadow: '#{$box-shadow}, #{$i}px #{$i}px #{$color}';
+  }
+  @return unquote($box-shadow);
+}
+@function longShadow-X($number, $color) {
+  $box-shadow: -1px 1px #{$color};
+  @for $i from 1 through $number {
+    $box-shadow: '#{$box-shadow}, -#{$i}px #{$i}px #{$color}';
+  }
+  @return unquote($box-shadow);
+}
+@function longShadow-Y($number, $color) {
+  $box-shadow: 1px -1px #{$color};
+  @for $i from 1 through $number {
+    $box-shadow: '#{$box-shadow}, #{$i}px -#{$i}px #{$color}';
+  }
+  @return unquote($box-shadow);
+}
+%flex-align {
+  display: flex;
+  align-items: center;
+}
+%flex-just-center {
+  display: flex;
+  justify-content: center;
+}
+%flex-just-btwn {
+  display: flex;
+  justify-content: space-between;
+}
+%pad {
+  @include box(2.5rem, 6rem, $pad);
+  boder-radius: .5rem;
+}
+html,
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html:after,
+html:before,
+body:after,
+body:before {
+  box-sizing: border-box;
+}
+html {
+  font-zise: 16px;
+  font-family: 'Ubuntu', sans-serif;
+  color: #333;
+}
+body {
+  background-color: $bg-color;
+}
+.instructions p {
+  color: #eee;
+  text-align: center;
+  font-weight: bold;
+}
+.gb__container {
+  @extend %flex-align;
+  @include box(19rem, 30rem, $gb-color);
+  border-radius: 1rem 1rem 4rem 1rem;
+  margin: 2% auto;
+  flex-direction: column;
+  box-shadow: longShadow(5, darken($gb-color, 20));
+  position: relative;
+  overflow: hidden;
+}
+.gb__screen {
+  @extend %flex-align;
+  @include box(16rem, 13rem, darken($screen, 10));
+  border-radius: 1rem 1rem 4rem 1rem;
+  box-shadow: 2px 2px 5px 0px darken($screen, 20) inset, 0px 0px 2px 0px darken($screen, 40);
+  border: 2px solid darken($screen, 30);
+  margin: 2rem 0 0;
+  justify-content: center;
+  position: relative;
+  &-text {
+    position: absolute;
+    text-transform: uppercase;
+    font-size: .3rem;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    left: 110px;
+    font-weight: bold;
+    &:before {
+      content: '';
+      display: inline-block;
+      width: 100%;
+      height: 3px;
+      box-shadow: 0px 3px 0px 0px #181a55 inset, 0px 5px 0px 0px #840039;
+      position: absolute;
+      left: -105%;
+    }
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 40%;
+      height: 3px;
+      box-shadow: 0px 3px 0px 0px #181a55 inset, 0px 5px 0px 0px #840039;
+      position: absolute;
+      right: -45%;
+    }
+  }
+  &-battery {
+    position: absolute;
+    top: 85px;
+    left: 10px;
+    font-size: .3rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    &:before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      position: absolute;
+      background: darken($screen, 30);
+      top: -12px;
+      left: 10px;
+      border-radius: 50%;
+      border: 1px solid darken($screen, 20);
+      box-shadow: -1px 0 1px 0px darken($screen, 50) inset, 0px 1px 1px 0px darken($screen, 30) inset;
+      transform: translateX(-50%);
+      animation: battery 1s infinite alternate;
+    }
+  }
+  &-video {
+    @include box(10rem, 9rem, #606e00);
+    box-shadow: 4px 4px 0px 0 rgba(darken(#606e00, 20), .7) inset, -1px -1px 0px 0 rgba(darken(#606e00, 20), .4) inset;
+    border: 1px solid darken($screen, 20);
+  }
+  video {
+    @include box(99%, 99%, none);
+    margin: 1% 0 0 1%;
+    padding: 0;
+  }
+}
+@keyframes battery {
+  0% {
+    background: darken($screen, 30);
+  }
+  50% {
+    background: darken(red, 10);
+  }
+  50% {
+    background: darken($screen, 30);
+  }
+  100% {
+    background: darken(red, 10);
+  }
+}
+.gb__text {
+  width: 16rem;
+  font-size: 12px;
+  color: #181a55;
+  letter-spacing: 1px;
+  font-weight: bold;
+  p {
+    margin: 5px 0 16px;
+  }
+  span.gameboy {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-style: italic;
+  }
+  span.tm {
+    text-transform: uppercase;
+    font-size: 8px;
+  }
+}
+.gb__controller {
+  width: 16rem;
+  margin-bottom: 2rem;
+}
+.gb__btn-up {
+  @extend %flex-just-btwn;
+  @include box(100%, 6rem, none);
+}
+.btn__pad {
+  @extend %flex-just-center;
+  position: relative;
+  @include box(50%, 6rem, none);
+  &:before {
+    content: '';
+    width: 80%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    background-color: rgba(darken($gb-color, 20), .2);
+    border-radius: 50%;
+  }
+}
+.pad__rows {
+  @extend %pad;
+  border-radius: 2px;
+  @include box(36px, 36px, none);
+  position: absolute;
+  &-up {
+    // top: 0;
+    // left: 0;
+    box-shadow: longShadow(3, darken($pad, 5)), -2px 2px 0px 0 rgba(lighten($pad, 50), .2) inset;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 10px;
+      left: 15%;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+    }
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 20px;
+      left: 15%;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+    }
+  }
+  &-right {
+    top: 36px;
+    right: 10px;
+    box-shadow: longShadow(3, darken($pad, 5)), -2px -2px 0px 0 rgba(lighten($pad, 50), .2) inset;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 18px;
+      left: 10px;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+      transform: rotate(90deg);
+    }
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 18px;
+      left: 0;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+      transform: rotate(90deg);
+    }
+  }
+  &-center {
+    @include box(42px, 42px, none);
+    top: 34px;
+    left: 44px;
+    box-shadow: none;
+    &:after {
+      content: '';
+      width: 35px;
+      height: 35px;
+      background-color: darken($pad, 3);
+      box-shadow: 0px 0px 2px 0px darken($pad, 9) inset, -13px 0px 2px 0px darken($pad, 6) inset;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  &-down {
+    top: 72px;
+    // left: 0;
+    box-shadow: longShadow(3, darken($pad, 5)), -2px -2px 0px 0 rgba(lighten($pad, 50), .2) inset;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 10px;
+      left: 15%;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+    }
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 20px;
+      left: 15%;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+    }    
+  }
+  &-left {
+    top: 36px;
+    left: 10px;
+    box-shadow: longShadow(3, darken($pad, 5)), 2px -2px 0px 0 rgba(lighten($pad, 50), .2) inset;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 18px;
+      left: 10px;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+      transform: rotate(90deg);
+    }
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 18px;
+      left: 0;
+      width: 75%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: darken($pad, 5);
+      transform: rotate(90deg);
+    }    
+  }
+}
+.btn__buttons {
+  @extend %flex-just-btwn;
+  @include box(7rem, 3rem, none);
+  margin-top: 1.5rem;
+  transform: rotate(-45deg);
+  position: relative;
+  &:before {
+    content: '';
+    width: 100%;
+    height: 80%;
+    background-color: rgba(darken($gb-color, 20), .2);
+    box-shadow: 10px 5px 5px 0px rgba(darken($gb-color, 30), .3) inset;
+    border-radius: 45%;
+    padding: 12px 10px;
+    position: absolute;
+    top: -7px;
+    left: -10px;
+  }
+}
+.btn {
+  @extend %flex-just-center;
+  @include box(3rem, 3rem, $btn-color);
+  border-radius: 50%;
+  align-items: center;
+  color: #181a55;
+  box-shadow: longShadow-X(2, darken($btn-color, 10)), 0px 2px 0px 0 rgba(lighten($btn-color, 50), .6) inset;
+  &:active {
+    box-shadow: longShadow-Y(1, darken($btn-color, 10)), 2px 0px 0px 0 rgba(darken($btn-color, 50), .6) inset;
+  }
+}
+.btn-a,
+.btn-b {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  position: relative;
+}
+.btn-a:after {
+  content: 'A';
+  transform: rotate(0deg);
+  left: 15px;
+  top: 55px;
+  margin: 0;
+  position: absolute;
+}
+.btn-b:after {
+  content: 'B';
+  transform: rotate(0deg);
+  left: 13px;
+  top: 55px;
+  margin: 0;
+  position: absolute;
+}
+.gb__btn-down {
+  @extend %flex-just-center;
+  width: 100%;
+  margin-top: 1rem;
+}
+.btn__option {
+  @include box(.8rem, 3rem, $btn-option);
+  margin: 0 .8rem;
+  border-radius: 1rem;
+  transform: rotate(45deg);
+  box-shadow: longShadow-X(2, darken($btn-option, 10)), 0px 2px 0px 0 rgba(lighten($btn-option, 50), .6) inset;
+}
+.btn__select,
+.btn__start {
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  color: #181a55;
+}
+.btn__select:before {
+  content: 'select';
+  transform: rotate(270deg);
+  font-size: .5rem;
+  left: -5px;
+  top: 19px;
+  margin: 0;
+  position: absolute;
+}
+.btn__start:before {
+  content: 'start';
+  transform: rotate(270deg);
+  font-size: .5rem;
+  left: -2px;
+  top: 19px;
+  margin: 0;
+  position: absolute;
+}
+.volume-group {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.volume-1,
+.volume-2,
+.volume-3,
+.volume-4,
+.volume-5,
+.volume-6 {
+  position: absolute;
+  width: 30%;
+  height: 9px;
+  background-color: $screen;
+  box-shadow: -2px 2px 1px 1px darken($screen, 20) inset, 1px -1px 0px 0px darken($screen, 35) inset;
+  transform: rotate(45deg);
+  border-radius: 4px;
+}
+.volume-1 {
+  bottom: 0;
+  right: 0;
+}
+.volume-2 {
+  bottom: 10px;
+  right: -10px;
+}
+.volume-3 {
+  bottom: 20px;
+  right: -20px;
+}
+.volume-4 {
+  bottom: 30px;
+  right: -30px;
+}
+.volume-5 {
+  bottom: 40px;
+  right: -40px;
+}
